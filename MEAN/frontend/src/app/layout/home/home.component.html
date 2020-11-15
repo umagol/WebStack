@@ -1,31 +1,22 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-        aria-expanded="false" aria-label="Toggle navigation"></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a class="dropdown-item" href="#">Action 1</a>
-                    <a class="dropdown-item" href="#">Action 2</a>
-                </div>
-            </li>
-        </ul>
-       
+<nav class="navbar navbar-expand-sm shadow" >
+    <a class="navbar-brand text-dark" href="#">Mean Stack</a>
+    <button class="navbar-toggler btn-outline-primary d-lg-none btn-sm" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+        click
+    </button>
+    <div class="collapse navbar-collapse " id="collapsibleNavId">
+        <!-- Button signup modal -->
+    <button type="button" class=" ml-auto btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#signup">
+        Signup
+    </button>
+    <!-- Button login modal -->
+    <button type="button" class="btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#login">
+        login
+    </button>
     </div>
 </nav>
 
-<!-- Button login modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login">
-  login
-</button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -40,8 +31,10 @@
 
             <form [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="modal-body">
-               
+                <span class="text-sm text-danger">{{error}}</span>
                 <div class="form-group">
+                <label for=""> Email Id </label>
+                      
                   <label for=""> Email Id </label>
                   <input type="email" class="form-control" name="email"  aria-describedby="helpId" formControlName="email" placeholder="">
                   <label for=""> Password </label>
@@ -60,10 +53,7 @@
 
 
 
-<!-- Button signup modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signup">
-Signup
-</button>
+
   
   <!-- Modal -->
   <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -96,3 +86,4 @@ Signup
           </div>
       </div>
   </div>
+

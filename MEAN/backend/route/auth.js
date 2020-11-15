@@ -19,7 +19,7 @@ route.post("/login", async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.Password);
 
     if (!validPass) {
-        return res.status(200).send({ eror : "Password Invalid"});
+        return res.status(200).send({ error : "Password Invalid"});
     } else {
         // creat and assign a token
         if(user.AccountType == "user"){
@@ -90,7 +90,7 @@ route.post("/signup/admin", async (req, res) => {
     });
     //check email is exit or not
     if (emailExit) {
-        return res.status(200).send({ eror : "Email is Invalid"});
+        return res.status(200).send({ error : "Email is Invalid"});
         
     }    
     //email is not exit so fill the data in db 

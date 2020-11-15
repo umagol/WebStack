@@ -1,14 +1,23 @@
 //Export
 const route = require("express").Router();
+const verify = require("./verifyToken");
+const User = require("../model/user");
 
 
-route.get( "/", (req, res) => {
-    res.send("hisatish");
+route.get( "/", verify, async(req, res) => {
+    try {
+        const allUser = await User.find();
+        //find() use for finding data in db and findOne() are use fine single data 
+        res.status(200).json(allUser);
+    }
+    catch (error) {
+        res.status(400).json({ message: error });//catch Error
+    }
 });
 
 route.get( "/:id", (req, res) => {
-    var id = req.params.id;
-    res.send(id);
+
+
 });
 
 route.post( "/:id", (req, res) => {
