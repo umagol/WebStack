@@ -15,8 +15,14 @@ route.get( "/", verify, async(req, res) => {
     }
 });
 
-route.get( "/:id", (req, res) => {
-
+route.get( "/:id",verify, async(req, res) => {
+    
+    try {
+        const oneUser = await User.findById(req.user); //Id is pass by url
+        res.json(oneUser);
+    } catch (error) {
+        res.json({ message: error });
+    }
 
 });
 

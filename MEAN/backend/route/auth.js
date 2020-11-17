@@ -23,13 +23,22 @@ route.post("/login", async (req, res) => {
     } else {
         // creat and assign a token
         if(user.AccountType == "user"){
-            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET); //send token in userid 
+            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET,
+                {
+                    expiresIn: process.env.JWT_EXPIRES_IN, // Set Time For access token
+                });
+            
+            //send token in userid 
             res.header("auth-token", token).status(201).send({ usertoken: token });
         }  
         else
         if(user.AccountType == "admin")
         {
-            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET); //send token in userid 
+            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET,
+                {
+                    expiresIn: process.env.JWT_EXPIRES_IN, // Set Time For access token
+                });
+            //send token in userid 
             res.header("auth-token", token).status(201).send({ admintoken: token });
         }
     }
