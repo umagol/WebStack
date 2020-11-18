@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-sm shadow" >
+    <a class="navbar-brand text-dark" href="#">Mean Stack</a>
+    <button class="navbar-toggler btn-outline-primary d-lg-none btn-sm" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+        click
+    </button>
+    <div class="collapse navbar-collapse " id="collapsibleNavId">
+        <!-- Button signup modal -->
+        <button  *ngIf='status == false' type="button" class=" ml-auto btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#signup">
+            Signup
+        </button>
+        <!-- Button login modal -->
+        <button  *ngIf='status == false' type="button" class="btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#login">
+            login
+        </button>
+        <button *ngIf='status == true' type="button" (click)="logout()" class=" ml-auto btn btn-outline-primary btn-sm m-1" >
+            logout
+        </button>
+    </div>
+
+    <div  >
+        <!-- Button signup modal -->
+      
+    </div>
+</nav>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                    <button type="button" id="cls" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="modal-body">
+                <span class="text-sm text-danger">{{error}}</span>
+                <div class="form-group">
+                <label for=""> Email Id </label>
+                      
+                  <label for=""> Email Id </label>
+                  <input type="email" class="form-control" name="email"  aria-describedby="helpId" formControlName="email" placeholder="">
+                  <label for=""> Password </label>
+                  <input type="password" class="form-control" name="password"  aria-describedby="helpId" formControlName="password" placeholder="">
+                 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Signup</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+              </div>
+              <form [formGroup]="signupForm" (ngSubmit)="signup()">
+              <div class="modal-body">
+                <div class="form-group">
+                        <label for=""> Full Name </label>
+                       <input type="text" class="form-control" name="name"  aria-describedby="helpId" placeholder="Name" formControlName="name" required>
+                        <label for=""> Email Id </label>
+                       <input type="email" class="form-control" name="email"  aria-describedby="helpId" placeholder="Email" formControlName="email" required>
+                        <label for=""> Password </label>
+                       <input type="password" class="form-control" name="password"  aria-describedby="helpId" placeholder="Password" formControlName="password" required>
+                        <label for=""> About </label>
+                       <input type="text" class="form-control" name="about"  aria-describedby="helpId" placeholder="about" formControlName="about" required>
+                        
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>

@@ -10,13 +10,15 @@ import { HomeComponent } from './layout/home/home.component';
 import { ListComponent } from './layout/list/list.component';
 import { SingalDataComponent } from './layout/singal-data/singal-data.component';
 import { SetheaderService } from './core/interceptor/setHeader.service';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ListComponent,
-    SingalDataComponent
+    SingalDataComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

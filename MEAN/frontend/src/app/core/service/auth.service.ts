@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { User } from '../model/User';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +15,12 @@ export class AuthService {
   Login$: Observable<any>;
   signup$: Observable<any>;
   AllUser$: Observable<any>;
-
+  User: User;
   private Base_Url = environment.ROOT_URL;
-  constructor( private http: HttpClient) { }
+  constructor( 
+    private http: HttpClient,
+    private cookie: CookieService
+    ) { }
 
   login(model: any): any{
     this.Login$ = this.http.post<any>(`${this.Base_Url}auth/login`, model);
@@ -25,12 +32,20 @@ export class AuthService {
 
 }
 
-  Userdata(): any{
+  Userdata(): Observable<any>{
+  return this.http.get<any>(`${this.Base_Url}user/`).pipe(map(response =>{
+    return response
+  }))
+}
 
-    this.AllUser$ = this.http.get<any>(`${this.Base_Url}user/`);
+  logout(): any{
+      this.cookie.delete('access-token');
+}
 
-  }
-
-
+SingalUser(userEmail: any): any{
+  var model: any = {};
+  model.Email = userEmail;
+  return this.http.get<any>(`${this.Base_Url}user/singaluser`, model);
+}
 }
 

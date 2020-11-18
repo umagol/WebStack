@@ -12,9 +12,6 @@ module.exports = (req, res, next) => {
       // Remove Bearer from string
       token = token.slice(7, token.length).trimLeft();
     } 
-
-    console.log(token);
-  
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     req.user = verified;

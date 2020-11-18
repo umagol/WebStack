@@ -15,10 +15,11 @@ route.get( "/", verify, async(req, res) => {
     }
 });
 
-route.get( "/:id",verify, async(req, res) => {
-    
+route.get( "/singaluser", verify, async(req, res) => {
     try {
-        const oneUser = await User.findById(req.user); //Id is pass by url
+        var email = req.body.Email;
+        const oneUser = await User.findOne({Email: email} ); //Id is pass by url
+        console.log(oneUser);
         res.json(oneUser);
     } catch (error) {
         res.json({ message: error });

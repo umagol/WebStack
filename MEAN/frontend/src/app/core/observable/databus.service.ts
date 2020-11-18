@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthService } from '../service/auth.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabusService {
 
-  constructor(private auth: AuthService){
+  private defaultLoginStatus = false;
+  isLoggedIn = new BehaviorSubject<any>(this.defaultLoginStatus);
+
+  constructor(){
   }
 
-
-
+  isLogin(status: boolean): any{
+    this.isLoggedIn.next(status);
+    console.log(this.defaultLoginStatus);
+  }
 
 }
 
