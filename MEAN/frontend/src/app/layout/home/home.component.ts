@@ -16,8 +16,8 @@ export class HomeComponent implements OnInit {
 
   public error: String = '';
   status: any = false;
-  UserId = this.cookie.get('id');
-  User: User;
+  User: any = {};
+
   ngOnInit(): void {
     
     if(this.token.istoken() == true){
@@ -26,11 +26,9 @@ export class HomeComponent implements OnInit {
 
       const helper = new JwtHelperService();
       const decodedToken = helper.decodeToken(this.cookie.get('access-token'));
-      console.log(jwt_decode(this.cookie.get('access-token')));
       const UserEmail = decodedToken.Email;
-      console.log(UserEmail);
+     
         this.auth.SingalUser(UserEmail).subscribe( (response: any) => { 
-          console.log(response); 
           this.User = response;
          });
     }
@@ -42,4 +40,9 @@ export class HomeComponent implements OnInit {
     private cookie: CookieService
     ){}
 
+
+
+    Update(): any{
+      
+    }
 }

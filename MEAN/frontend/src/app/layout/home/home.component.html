@@ -1,14 +1,26 @@
 <app-navbar></app-navbar>
-<!-- <div class="mt-5">
-  <div class="row">
-    <div *ngFor="let item of User" class="col-sm-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{item.UserName}}</h5>
-          <p class="card-text">{{item.UserAbout}}</p>
-          <a href="#" class="btn btn-primary">More..</a>
-        </div>
-      </div>
+
+<form class="mt-5 w-75 ml-5">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" value="{{User.Email}}" id="inputEmail4" >
     </div>
   </div>
-</div> -->
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Name</label>
+      <input type="email" class="form-control" value="{{User.Name}}" id="inputEmail4" >
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">About</label>
+      <input type="email" class="form-control" value="{{User.About}}" id="inputEmail4" >
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-1 mr-2">Update</button>
+  <button type="submit" class="btn btn-primary mt-1 mr-2">delete Account</button>
+  
+</form>

@@ -6,7 +6,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/User';
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,6 +35,7 @@ export class AuthService {
   return this.http.get<any>(`${this.Base_Url}user/`).pipe(map(response =>{
     return response
   }))
+  
 }
 
   logout(): any{
