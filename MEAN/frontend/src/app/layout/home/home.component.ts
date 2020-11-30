@@ -4,6 +4,7 @@ import { TokenService } from 'src/app/core/service/token.service';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from 'src/app/core/model/User';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,13 +24,9 @@ export class HomeComponent implements OnInit {
       this.status = true;
         
 
-      const helper = new JwtHelperService();
-      const decodedToken = helper.decodeToken(this.cookie.get('access-token'));
-      const UserEmail = decodedToken.Email;
-     
+      const UserEmail = this.token.decodetoekn(); 
         this.auth.SingalUser(UserEmail).subscribe( (response: any) => { 
           this.User = response;
-          console.log(response);
          });
     }
   }
@@ -37,12 +34,18 @@ export class HomeComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private token: TokenService,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private route: Router
     ){}
 
+    Update(): any{     
+    }
 
-
-    Update(): any{
-      
+    DeleteAccoutn(): any{
+      const UserEmail = this.token.decodetoekn()
+       this.auth.DeleteAccount(UserEmail).subscribe( (response: any) => { 
+        this.auth.logout();
+        this.route.navigate['/home'];
+       });
     }
 }

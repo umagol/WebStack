@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from "../../../environments/environment";
-import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +27,9 @@ export class TokenService {
         return this.cookie.get('access-token');
     }
     decodetoekn(): any{
-        
+        const helper = new JwtHelperService();
+        const decodedToken = helper.decodeToken(this.cookie.get('access-token'));
+        const UserEmail = decodedToken.Email;
+        return UserEmail;       
     }
 }

@@ -29,22 +29,16 @@ route.get( "/singaluser", verify, async(req, res) => {
         res.json({ message: error });
     }
 
-});
+}); 
 
-route.post( "/:id", (req, res) => {
-    var id = req.params.id;
-});
-
-
-route.delete( "/:id", (req, res) => {
-    var id = req.params.lilistingid;
-
+route.delete( "/delete", (req, res) => {
+    var id =req.body.email;
+    console.log(req.body.email);
+    // console.log(req );
 });
 
 route.put( "/:id", (req, res) => {
     var id = req.params.lilistingid;
-
 });
-
 
 module.exports = route;

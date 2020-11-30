@@ -37,6 +37,7 @@ export class AuthService {
 
   logout(): any{
       this.cookie.delete('access-token');
+      this.cookie.deleteAll();
 }
 
   SingalUser(userEmail: any): any{
@@ -44,5 +45,11 @@ export class AuthService {
    model.email = userEmail;
     return this.http.get<any>(`${this.Base_Url}user/singaluser`, model);
 }
-}
 
+  DeleteAccount(userEmail: any): any{
+   const model: any ={}
+   model.email= userEmail; 
+   console.log(model);
+   return this.http.delete<any>(`${this.Base_Url}user/delete`, model);    
+  }
+}
