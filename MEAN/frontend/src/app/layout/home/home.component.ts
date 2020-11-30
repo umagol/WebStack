@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { TokenService } from 'src/app/core/service/token.service';
-import { User } from 'src/app/core/model/User';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import jwt_decode from 'jwt-decode';
+import { User } from 'src/app/core/model/User';
 
 
 @Component({
@@ -16,8 +15,8 @@ export class HomeComponent implements OnInit {
 
   public error: String = '';
   status: any = false;
-  User: any = {};
-
+  public User: any  = {};
+  
   ngOnInit(): void {
     
     if(this.token.istoken() == true){
@@ -30,6 +29,7 @@ export class HomeComponent implements OnInit {
      
         this.auth.SingalUser(UserEmail).subscribe( (response: any) => { 
           this.User = response;
+          console.log(response);
          });
     }
   }

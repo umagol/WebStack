@@ -26,26 +26,23 @@ export class AuthService {
 }
 
   signup(model: any): any{
-
     this.signup$ = this.http.post<any>(`${this.Base_Url}auth/signup/user`, model);
-
 }
 
   Userdata(): Observable<any>{
   return this.http.get<any>(`${this.Base_Url}user/`).pipe(map(response =>{
     return response
-  }))
-  
+  }))  
 }
 
   logout(): any{
       this.cookie.delete('access-token');
 }
 
-SingalUser(userEmail: any): any{
-  var model: any = {};
-  model.Email = userEmail;
-  return this.http.get<any>(`${this.Base_Url}user/singaluser`, model);
+  SingalUser(userEmail: any): any{
+   var model: any = {};
+   model.email = userEmail;
+    return this.http.get<any>(`${this.Base_Url}user/singaluser`, model);
 }
 }
 

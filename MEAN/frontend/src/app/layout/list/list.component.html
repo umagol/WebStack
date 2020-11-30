@@ -1,2 +1,14 @@
 <app-navbar></app-navbar>
-<h1>hista</h1>
+
+<div class="row">
+  <div>
+    <div class="card mt-3 ml-2" style="width: 18rem;" *ngFor="let item of User">
+      <div class="card-body">
+        <h5 class="card-title"><b> User Name:- </b> {{item.UserName}} </h5>
+        <p class="card-text"><b>About:</b> {{item.UserAbout}}</p>
+        <a href="#" class="btn btn-primary" routerLink='../{{item.UserName}}'>More Info.</a>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

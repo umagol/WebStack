@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './layout/home/home.component';
 import { ListComponent } from './layout/list/list.component';
-import { SingalDataComponent } from './layout/singal-data/singal-data.component';
+import { UserMoreModule } from './layout/user-more/user-more.module';
 
 const routes: Routes = [
   {
@@ -19,8 +19,9 @@ const routes: Routes = [
   },
   {
     path:":id",
-    component:SingalDataComponent
-  }
+    loadChildren: () =>
+    import("./layout/user-more/user-more.module").then(m => m.UserMoreModule)
+  },
 ];
 
 @NgModule({

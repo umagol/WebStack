@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingalDataComponent } from './singal-data.component';
+import { SingledataComponent } from './singledata.component';
 
-describe('SingalDataComponent', () => {
-  let component: SingalDataComponent;
-  let fixture: ComponentFixture<SingalDataComponent>;
+describe('SingledataComponent', () => {
+  let component: SingledataComponent;
+  let fixture: ComponentFixture<SingledataComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SingalDataComponent ]
+      declarations: [ SingledataComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SingalDataComponent);
+    fixture = TestBed.createComponent(SingledataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

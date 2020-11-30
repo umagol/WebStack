@@ -19,14 +19,15 @@ export class TokenService {
 
     istoken(): any{
         if(this.cookie.get('access-token')){
-            console.log('is login');
             return true;
         }else{
-            console.log('is not login   ');
             return false;
         }
     }
     gettoken(): any{
         return this.cookie.get('access-token');
+    }
+    decodetoekn(): any{
+        
     }
 }

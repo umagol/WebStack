@@ -28,7 +28,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     if(this.token.istoken() == true){
       this.status = true;
-        
         // this.auth.Userdata().subscribe( (response: any) => { 
         //   console.log(response); 
         //   this.User = response;
@@ -60,19 +59,18 @@ export class NavbarComponent implements OnInit {
         
         this.loginForm.reset();
         alert("login user is dome");
-          
         window.location.reload();
-        
 
         this.error = "";
         
-        }else if (response.admintoken) // login as a admin
+        }else 
+        if (response.admintoken) // login as a admin
         {
-
         this.token.SetToken(response.admintoken);
 
         this.loginForm.reset();
         alert("login admin is dome");
+        // window.location.replace('/list');
         this.router.navigate(['/list']);  
         
         var cls = document.getElementById("cls"); //It used for  close model in bootstrap 
