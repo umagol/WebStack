@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
        this.auth.DeleteAccount(UserEmail).subscribe( (response: any) => { 
         this.auth.logout();
         this.route.navigate['/home'];
+        window.location.reload();
        });
     }
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/User';
 import { map } from 'rxjs/operators';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -47,9 +48,8 @@ export class AuthService {
 }
 
   DeleteAccount(userEmail: any): any{
-   const model: any ={}
-   model.email= userEmail; 
-   console.log(model);
-   return this.http.delete<any>(`${this.Base_Url}user/delete`, model);    
+   var model: any ={}
+   model.email = userEmail;
+   return this.http.delete<any>(`${this.Base_Url}user/delete/`+ userEmail);    
   }
 }
