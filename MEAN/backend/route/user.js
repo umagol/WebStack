@@ -15,11 +15,9 @@ route.get( "/", verify, async(req, res) => {
     }
 });
 
-route.get( "/singaluser", verify, async(req, res) => {
+route.get( "/singaluser/:Email", verify, async(req, res) => {
     try {
-        var email = req.user.Email;
-        const oneUser = await User.findOne({UserEmail: email} ); //Id is pass by url
-
+        const oneUser = await User.findOne({UserEmail: req.params.Email} ); //Id is pass by url
         res.json({
             Email: oneUser.UserEmail,
             About: oneUser.UserAbout,

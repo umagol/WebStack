@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
     }
 
     DeleteAccoutn(): any{
+      var a = confirm("You want to delete Account");
+      if(a){
       const UserEmail = this.token.decodetoekn()
        this.auth.DeleteAccount(UserEmail).subscribe( (response: any) => { 
         this.auth.logout();
@@ -50,4 +52,5 @@ export class HomeComponent implements OnInit {
         window.location.reload();
        });
     }
+  }
 }

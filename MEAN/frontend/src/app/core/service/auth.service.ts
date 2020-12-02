@@ -42,9 +42,8 @@ export class AuthService {
 }
 
   SingalUser(userEmail: any): any{
-   var model: any = {};
-   model.email = userEmail;
-    return this.http.get<any>(`${this.Base_Url}user/singaluser`, model);
+    console.log(userEmail);
+    return this.http.get<any>(`${this.Base_Url}user/singaluser/`+ userEmail );
 }
 
   DeleteAccount(userEmail: any): any{
