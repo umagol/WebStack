@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit {
     private route: Router
     ){}
 
-    Update(): any{     
+    Update(): any{
+      
     }
 
     DeleteAccoutn(): any{
