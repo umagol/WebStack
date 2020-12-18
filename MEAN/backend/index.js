@@ -34,10 +34,6 @@ app.listen("5000",()=>console.log("Server is runing on 5000 port"));
 
 
 
-
-
-
-
 //List of all Mongoose Function for Query
 
 // Model.deleteMany()

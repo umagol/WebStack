@@ -71,7 +71,7 @@ route.post("/signup/user", async (req, res) => {
         UserPassword: hashedPassword,
     });
 
-    const data = new Auth({
+    const auth = new Auth({
         Name:req.body.name,
         Email: req.body.email,
         Password:hashedPassword,
@@ -80,7 +80,7 @@ route.post("/signup/user", async (req, res) => {
 
     //try save the data is db and carch any error
     try {
-        const savedata = await data.save();
+        const savedata = await auth.save();
         const savedUser = await user.save();
         res.status(201).send(savedUser); //status 201 for user post method and 200 use for get method 
     } catch (error) {
