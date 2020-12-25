@@ -30,7 +30,7 @@ app.use("/api/user", User);
 app.use("/api/admin", Admin);
 app.use("/api/auth", Auth);
 
-app.listen("5000",()=>console.log("Server is runing on 5000 port"));
+app.listen(5000,()=>console.log("Server is runing on 5000 port"));
 
 
 

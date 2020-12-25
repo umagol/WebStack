@@ -33,7 +33,7 @@ try {
     console.log(req.params.id);
     const DeleteUser = await User.findOneAndDelete({UserEmail:req.params.id});
     const DeleteAuth = await Auth.findOneAndDelete({Email:req.params.id});
-    res.json(DeleteUser);    
+    res.send(DeleteUser);    
 } catch (error) {
    console.log(error); 
 }

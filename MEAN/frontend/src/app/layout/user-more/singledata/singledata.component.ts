@@ -43,9 +43,10 @@ export class SingledataComponent implements OnInit {
     var a = confirm("You want to delete User Account");
     if (a) {
       this.auth.DeleteAccount(this.UserName.id).subscribe((response: any) => {
-        this.router.navigate['../'];
-        window.location.reload();
+        // window.location.reload();
       });
     }
+    console.log("working");
+    this.router.navigate(['../list']);
   }
 }

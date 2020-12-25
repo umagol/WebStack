@@ -7,7 +7,10 @@
     <div class="collapse navbar-collapse " id="collapsibleNavId">
         <!-- Button signup modal -->
         <button  *ngIf='status == false' type="button" class=" ml-auto btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#signup">
-            Signup
+            Signup User
+        </button>
+        <button  *ngIf='status == false' type="button" class="  btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#Adinsignup">
+            Signup Admin
         </button>
         <!-- Button login modal -->
         <button  *ngIf='status == false' type="button" class="btn btn-outline-primary btn-sm m-1" data-toggle="modal" data-target="#login">
@@ -17,16 +20,14 @@
             logout
         </button>
     </div>
-
-    <div  >
+    <div>
         <!-- Button signup modal -->
-      
     </div>
 </nav>
 
 
 
-<!-- Modal -->
+<!-- Modal Login-->
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -63,12 +64,12 @@
 
 
   
-  <!-- Modal -->
+  <!-- Modal User SignUp -->
   <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title">Signup</h5>
+                  <h5 class="modal-title">User Signup</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
@@ -94,3 +95,36 @@
           </div>
       </div>
   </div>
+
+
+  <!-- Modal Admin SignUp -->
+  <div class="modal fade" id="Adinsignup" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Admin Signup</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form [formGroup]="AdminsignupForm" (ngSubmit)="Adminsignup()">
+            <div class="modal-body">
+              <div class="form-group">
+                      <label for=""> Full Name </label>
+                     <input type="text" class="form-control" name="name"  aria-describedby="helpId" placeholder="Name" formControlName="name" required>
+                      <label for=""> Email Id </label>
+                     <input type="email" class="form-control" name="email"  aria-describedby="helpId" placeholder="Email" formControlName="email" required>
+                      <label for=""> Password </label>
+                     <input type="password" class="form-control" name="password"  aria-describedby="helpId" placeholder="Password" formControlName="password" required>
+                      <label for=""> About </label>
+                     <input type="text" class="form-control" name="about"  aria-describedby="helpId" placeholder="about" formControlName="about" required>
+                      
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>

@@ -135,4 +135,80 @@ route.post("/signup/admin", async (req, res) => {
 
 });
 
+
+
+
+/**
+ * Not Wrokin Well 
+ */
+// route.post('/changepassword',(req, res)=>{
+//     var  data = req.query.email.split(",");
+//     var  email = data[0];
+//     var username = data[1];
+     
+//      if(!req.query.email){
+//       var error = [{mssg: "Fill email!"}];
+//       res.send(error);
+//     }else {
+//     user.findOne({Username:username,Email:email}, function(err, result) {
+//           if(result){
+//             console.log(result)
+
+//             var lid = result.Login_id;
+//             console.log("loginid",lid);
+
+//            var otp = Math.floor((Math.random() * 10000) + 1);
+//            if(result){
+
+//             var transporter = nodemailer.createTransport({
+//               host: 'smtp.gmail.com',
+//               port: 587,
+//               secure: false, // true for 465, false for other ports
+//               auth: {
+//                   user: 'testwork@gmail.com', // generated ethereal user
+//                   pass: 'testwork'  // generated ethereal password
+//               },
+//               tls:{
+//                 rejectUnauthorized:false
+//               }
+//             });
+          
+//             var mailOptions = {
+//               from: 'testwork@gmail.com',
+//               to: email,
+//               subject: 'Change Password!',
+//               text: 'OTP of password change : '+otp+'.'
+//             };
+//             transporter.sendMail(mailOptions, function(error, info){
+//               if (error) {
+//                 console.log(error);
+//               } else {
+//                 console.log('Email sent: ' + info.response);
+                  
+//                   var myquery = { Login_id:lid };
+//                   var newvalues = {$set:{ OTP: otp}};
+//                   user.updateOne(myquery, newvalues, function(err, results) {
+//                     if (err) throw err;
+//                     console.log("1 document updated");
+//                     var m = [{mssg: "otp_sent",otp:otp}];
+//                     res.send(m);       
+//                   });
+//               }
+//             });
+//            }
+//            else{
+//            var error = [{mssg: "Email doesn't exits"}];
+//            res.send(error);
+//            }
+//           }
+//           else{
+//             var error = [{mssg: "Username doesn't exits"}];
+//           res.send(error);
+//           }
+//        });
+//     }
+// });
+
+
+
 module.exports = route;

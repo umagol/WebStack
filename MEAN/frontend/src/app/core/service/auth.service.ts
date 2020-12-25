@@ -30,6 +30,11 @@ export class AuthService {
     this.signup$ = this.http.post<any>(`${this.Base_Url}auth/signup/user`, model);
 }
 
+Adminsignup(model: any): any{
+  this.signup$ = this.http.post<any>(`${this.Base_Url}auth/signup/admin`, model);
+}
+
+
   Userdata(): Observable<any>{
   return this.http.get<any>(`${this.Base_Url}user/`).pipe(map(response =>{
     return response

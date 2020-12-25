@@ -14,6 +14,7 @@ import { TokenService } from 'src/app/core/service/token.service';
 export class NavbarComponent implements OnInit {
   loginForm: FormGroup;
   signupForm: FormGroup;
+  AdminsignupForm: FormGroup;
   public error: String = '';
   status: any = false;
   User: User[];
@@ -45,6 +46,13 @@ export class NavbarComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       about: new FormControl('', [Validators.required])
     });
+
+    this.AdminsignupForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      about: new FormControl('', [Validators.required])
+    });
   }
 
   login(): any{
@@ -58,7 +66,7 @@ export class NavbarComponent implements OnInit {
         this.token.SetToken(response.usertoken);
         
         this.loginForm.reset();
-        alert("login user is dome");
+        alert("Welcome");
         window.location.reload();
 
         this.error = "";
@@ -80,7 +88,7 @@ export class NavbarComponent implements OnInit {
         }
         else
         if(response.error){
-          this.error = response.error;
+          this.error = "Email and Password is incorrect";
           this.loginForm.reset();
         }
     });  
@@ -91,21 +99,31 @@ export class NavbarComponent implements OnInit {
   }
 
 signup(): any{
-
-if(this.signupForm.valid){
-  this.auth.signup(this.signupForm.value);
-  this.auth.signup$.subscribe( response => {
-     if(response.error){
-      alert(response.error);
-     }
-    
-     alert("Welcome to app");
-     window.location.reload();
-   });
-
+  if(this.signupForm.valid){
+    this.auth.signup(this.signupForm.value);
+    this.auth.signup$.subscribe( response => {
+      if(response.error){
+        alert(response.error);
+      }
+      alert("Welcome to app and Login");
+      window.location.reload();
+    });
   }
-  }
+}
 
+
+Adminsignup(): any{
+  if(this.AdminsignupForm.valid){
+    this.auth.Adminsignup(this.AdminsignupForm.value);
+    this.auth.signup$.subscribe( response => {
+      if(response.error){
+        alert(response.error);
+      }
+      alert("Welcome to app and Login ");
+      window.location.reload();
+    });
+  }
+}
 
 logout(): any{
   this.auth.logout();
