@@ -30,8 +30,8 @@ export class AuthService {
     this.signup$ = this.http.post<any>(`${this.Base_Url}auth/signup/user`, model);
 }
 
-Adminsignup(model: any): any{
-  this.signup$ = this.http.post<any>(`${this.Base_Url}auth/signup/admin`, model);
+  Adminsignup(model: any): any{
+    this.signup$ = this.http.post<any>(`${this.Base_Url}auth/signup/admin`, model);
 }
 
 
@@ -56,4 +56,11 @@ Adminsignup(model: any): any{
    model.email = userEmail;
    return this.http.delete<any>(`${this.Base_Url}user/delete/`+ userEmail);    
   }
+
+
+  UpdateUser(body: any, id: any): any{
+    return this.http.put(`${this.Base_Url}user/update/` + id, body);
+  }
+
+
 }

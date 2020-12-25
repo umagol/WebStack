@@ -28,19 +28,29 @@ route.get( "/singaluser/:Email", verify, async(req, res) => {
     }
 }); 
 
-route.delete("/delete/:id", verify, async(req, res) => {
+route.delete("/delete/:Email", verify, async(req, res) => {
 try {
-    console.log(req.params.id);
-    const DeleteUser = await User.findOneAndDelete({UserEmail:req.params.id});
-    const DeleteAuth = await Auth.findOneAndDelete({Email:req.params.id});
+    const DeleteUser = await User.findOneAndDelete({UserEmail:req.params.Email});
+    const DeleteAuth = await Auth.findOneAndDelete({Email:req.params.Email});
     res.send(DeleteUser);    
 } catch (error) {
    console.log(error); 
 }
 });
 
-route.put( "/:id", (req, res) => {
+route.put( "/update/:Email", verify, async (req, res) => {
     var id = req.params.lilistingid;
+    var Data = {UserName: req.body.name, UserEmail: req.body.email, UserAbout: req.body.about};
+    console.log(Data);
+    try {
+    const update = User.findOneAndUpdate({UserEmail:req.body.email}, Data, null,  function (err, docs) { 
+        if (err){ 
+            console.log(err) 
+        } });
+    res.status(201).send({message: "Data is Updated "})
+} catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports = route;
