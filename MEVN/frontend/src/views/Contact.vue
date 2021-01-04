@@ -1,11 +1,11 @@
 <template>
     <div>
         <Header />
-    <h1>About Page</h1>
+    <h1>Contact Page</h1>
     </div>
 </template>
 <script>
-import Header from '../components/Header.vue'
+import Header from '../components/Header'
 export default {
     components:{
         Header
