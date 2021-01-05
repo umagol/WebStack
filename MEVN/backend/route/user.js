@@ -15,6 +15,19 @@ route.get( "/", verify, async(req, res) => {
     }
 });
 
+
+route.get( "/alluser", async(req, res) => {
+    try {
+        const allUser = await User.find();
+        //find() use for finding data in db and findOne() are use fine single data 
+        res.status(200).json(allUser);
+    }
+    catch (error) {
+        res.status(400).json({ message: error });//catch Error
+    }
+});
+
+
 route.get( "/singaluser/:Email", verify, async(req, res) => {
     try {
         const oneUser = await User.findOne({UserEmail: req.params.Email} ); //Id is pass by url

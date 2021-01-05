@@ -75,16 +75,39 @@
               >
                 Login
               </button>
-              <button type="button" class="btn btn-outline-dark lh-1 mt-1" data-bs-toggle="modal"
-                data-bs-target="#signup">
+              <button
+                type="button"
+                class="btn btn-outline-dark lh-1 mt-1"
+                data-bs-toggle="modal"
+                data-bs-target="#signup"
+              >
                 Signup
               </button>
-              <button type="button" class="btn iconwitdh" data-bs-toggle="modal"
-                data-bs-target="#signup">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
-                  <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                  <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+              <button
+                type="button"
+                class="btn iconwitdh"
+                data-bs-toggle="modal"
+                data-bs-target="#signup"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-person-circle"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
+                  />
                 </svg>
               </button>
             </li>
@@ -113,21 +136,39 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+          <form >
+            <div class="modal-body">
+              <input
+                class="form-control"
+                type="email"
+                placeholder="Enter Email Address"
+                v-model.trim="Login_model.email"
+              /><br />
+              <!-- <label class="form-control me-auth">Password</label> -->
+              <input
+                class="form-control"
+                type="password"
+                placeholder="Enter Password"
+                v-model.trim="Login_model.password"
+              />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" v-on:click="LogIn()" class="btn btn-primary" >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-       <div
+    <div
       class="modal fade"
       id="signup"
       tabindex="-1"
@@ -145,7 +186,28 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">...</div>
+          <div class="modal-body">
+             
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Enter User Name"
+              /><br />
+             <input
+                class="form-control"
+                type="email"
+                placeholder="Enter Email"
+              /><br />
+              <!-- <label class="form-control me-auth">Password</label> -->
+              <input
+                class="form-control"
+                type="password"
+                placeholder="Enter Password"
+              /><br />
+              <textarea class="form-control" placeholder="Enter About You">
+
+              </textarea>
+          </div>
           <div class="modal-footer">
             <button
               type="button"
@@ -154,19 +216,58 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit" v-on:click="SignUp()" class="btn btn-primary">
+              Submit
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      errors: [],
+      IsLogin:false,
+      Login_model: {
+        email:null,
+        password:null
+      },
+      Signup_model:{}
+    };
+  },
+  methods: {
+    LogIn() {
+      axios.post(`http://localhost:5000/api/auth/login`, this.Login_model)
+      .then(response => {
+        localStorage.setItem("Access-Token",response.data.Accesstoken)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    SignUp() {
+      console.log("Signup is Work");
+    },
+  },
+  be
+};
+</script>
+
+
+
 <style lang="stylus">
 .nav-width {
   height: 50px;
   background-color: #4CAF50;
 }
-.iconwitdh{
+
+.iconwitdh {
   height: 40px;
 }
 </style>

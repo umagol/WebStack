@@ -4,7 +4,6 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const User = require("./route/user");
-const Admin = require("./route/admin");
 const Auth = require("./route/auth");
 const cors = require("cors");
 
@@ -28,7 +27,6 @@ app.use(cors());
 
 // Route
 app.use("/api/user", User);
-app.use("/api/admin", Admin);
 app.use("/api/auth", Auth);
 
 app.listen(5000,()=>console.log("Server is runing on 5000 port"));
