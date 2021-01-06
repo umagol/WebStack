@@ -68,8 +68,9 @@
             </li> -->
             <li>
               <button
+              v-if="IsLogin == false"
                 type="button"
-                class="btn btn-outline-dark me-2 lh-1 mt-1"
+                class="btn btn-outline-dark me-2 lh-1 m-1"
                 data-bs-toggle="modal"
                 data-bs-target="#login"
               >
@@ -77,13 +78,15 @@
               </button>
               <button
                 type="button"
-                class="btn btn-outline-dark lh-1 mt-1"
+                class="btn btn-outline-dark lh-1 m-1"
                 data-bs-toggle="modal"
                 data-bs-target="#signup"
+                v-if="IsLogin == false"
               >
                 Signup
               </button>
               <button
+                v-if="IsLogin == true"
                 type="button"
                 class="btn iconwitdh"
                 data-bs-toggle="modal"
@@ -136,7 +139,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form >
+          <!-- <form > -->
             <div class="modal-body">
               <input
                 class="form-control"
@@ -164,7 +167,7 @@
                 Submit
               </button>
             </div>
-          </form>
+          <!-- </form> -->
         </div>
       </div>
     </div>
@@ -245,7 +248,8 @@ export default {
     LogIn() {
       axios.post(`http://localhost:5000/api/auth/login`, this.Login_model)
       .then(response => {
-        localStorage.setItem("Access-Token",response.data.Accesstoken)
+        localStorage.setItem("Access-Token",response.data.Accesstoken);
+        window.location.reload();
       })
       .catch(e => {
         this.errors.push(e)
@@ -255,7 +259,20 @@ export default {
       console.log("Signup is Work");
     },
   },
-  be
+  created(){
+    if(localStorage.getItem('Access-Token') == null){
+      this.IsLogin=false;
+    }else{
+      this.IsLogin=true;
+    }
+  },
+  mounted(){
+    if(localStorage.getItem('Access-Token') == null){
+      this.IsLogin=false;
+    }else{
+      this.IsLogin=true;
+    }
+  }
 };
 </script>
 

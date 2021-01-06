@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const User = require("./route/user");
 const Auth = require("./route/auth");
 const cors = require("cors");
+const path = require("path")
 
 //Dotenv config
 dotenv.config();
@@ -21,9 +22,13 @@ mongoose.connect(
     ()=>console.log('DB is Connect')
 );
 
+
+
+
 // Middleware
 app.use(express.json());
 app.use(cors());
+
 
 // Route
 app.use("/api/user", User);

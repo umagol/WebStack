@@ -1,8 +1,33 @@
-const route = require("express").Router();
+const express = require("express");
+const route = express.Router();
 const bcrypt = require("bcryptjs");
 const Auth = require("../model/auth");
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
+const path = require("path")
+const multer  = require('multer');
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${req.body.email}` + path.extname(file.originalname));
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+
 
 route.post("/login", async (req, res) => {
 
@@ -31,12 +56,13 @@ route.post("/login", async (req, res) => {
 });
 
 //User SignUp Route
-route.post("/signup", async (req, res) => {
-
+route.post("/signup",  async (req, res) => {
+    
     // checking user email id in database
     const emailExit = await Auth.findOne({
         Email: req.body.email
     });
+    
     //check email is exit or not
     if (emailExit) {
         return res.status(400).send({ error : "Email is Invalid"});    
@@ -47,12 +73,15 @@ route.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
+    upload.single("image");
+
     // create new user
     const user = new User({
         //requist . bodypaser . filedname by pass data in frontend or postman
         UserName: req.body.name,
         UserEmail: req.body.email,
-        UserAbout:req.body.about,
+        UserAbout: req.body.about,
+        // ProfileImage: storage,
     });
 
     const auth = new Auth({
