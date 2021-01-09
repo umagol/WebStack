@@ -2,7 +2,7 @@
   <div class="home">
     <Header />
     <div v-for="item in AllUser" :key="item.UserName" class="card" style="width: 18rem;">
-      <img src="../assets/logo.png" class="card-img-top" width="50px" height="100px"  alt="logo">
+      <img src="{{item.ProfileImagePath}}" class="card-img-top" width="50px" height="100px"  alt="logo">
       <div class="card-body">
         <h1>{{item.UserName}}</h1>
         <p class="card-text">{{item.UserAbout}}</p>
@@ -27,6 +27,7 @@ export default {
   created(){
     axios.get('http://localhost:5000/api/user/alluser').then(response=>{
       this.AllUser = response.data;
+      console.log(response)
     }).catch(error=>{
       this.errors.push(error)
     })

@@ -68,7 +68,7 @@
             </li> -->
             <li>
               <button
-              v-if="IsLogin == false"
+                v-if="IsLogin == false"
                 type="button"
                 class="btn btn-outline-dark me-2 lh-1 m-1"
                 data-bs-toggle="modal"
@@ -140,33 +140,33 @@
             ></button>
           </div>
           <!-- <form > -->
-            <div class="modal-body">
-              <input
-                class="form-control"
-                type="email"
-                placeholder="Enter Email Address"
-                v-model.trim="Login_model.email"
-              /><br />
-              <!-- <label class="form-control me-auth">Password</label> -->
-              <input
-                class="form-control"
-                type="password"
-                placeholder="Enter Password"
-                v-model.trim="Login_model.password"
-              />
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" v-on:click="LogIn()" class="btn btn-primary" >
-                Submit
-              </button>
-            </div>
+          <div class="modal-body">
+            <input
+              class="form-control"
+              type="email"
+              placeholder="Enter Email Address"
+              v-model.trim="Login_model.email"
+            /><br />
+            <!-- <label class="form-control me-auth">Password</label> -->
+            <input
+              class="form-control"
+              type="password"
+              placeholder="Enter Password"
+              v-model.trim="Login_model.password"
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" v-on:click="LogIn()" class="btn btn-primary">
+              Submit
+            </button>
+          </div>
           <!-- </form> -->
         </div>
       </div>
@@ -190,26 +190,39 @@
             ></button>
           </div>
           <div class="modal-body">
-             
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Enter User Name"
-              /><br />
-             <input
-                class="form-control"
-                type="email"
-                placeholder="Enter Email"
-              /><br />
-              <!-- <label class="form-control me-auth">Password</label> -->
-              <input
-                class="form-control"
-                type="password"
-                placeholder="Enter Password"
-              /><br />
-              <textarea class="form-control" placeholder="Enter About You">
-
-              </textarea>
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Enter User Name"
+              v-model="Signup_model.name"
+            /><br />
+            <input
+              class="form-control"
+              type="email"
+              placeholder="Enter Email"
+              v-model="Signup_model.email"
+            /><br />
+            <!-- <label class="form-control me-auth">Password</label> -->
+            <input
+              class="form-control"
+              type="password"
+              placeholder="Enter Password"
+              v-model="Signup_model.password"
+            /><br />
+            <textarea
+              class="form-control"
+              placeholder="Enter About You"
+              v-model="Signup_model.about"
+            >
+            </textarea
+            ><br />
+            <!-- <input
+              type="file"
+              class="form-control btn btn-primary"
+              ref="file"
+              v-on:change="fileupload"
+              name="image"
+            /> -->
           </div>
           <div class="modal-footer">
             <button
@@ -230,49 +243,79 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
       errors: [],
-      IsLogin:false,
+      IsLogin: false,
       Login_model: {
-        email:null,
-        password:null
+        email: null,
+        password: null,
       },
-      Signup_model:{}
+      Signup_model: {},
+      file: null,
     };
   },
   methods: {
     LogIn() {
-      axios.post(`http://localhost:5000/api/auth/login`, this.Login_model)
-      .then(response => {
-        localStorage.setItem("Access-Token",response.data.Accesstoken);
-        window.location.reload();
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+      axios
+        .post(`http://localhost:5000/api/auth/login`, this.Login_model)
+        .then((response) => {
+          localStorage.setItem("Access-Token", response.data.Accesstoken);
+          window.location.reload();
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
+
+
+
+
+
+
+
+
+
+
     SignUp() {
-      console.log("Signup is Work");
+      console.log(this.Signup_model);
+      axios
+        .post(`http://localhost:5000/api/auth/signup`, this.Signup_model)
+        .then((response) => {
+          console.log(response);
+          // window.location.reload();
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
   },
-  created(){
-    if(localStorage.getItem('Access-Token') == null){
-      this.IsLogin=false;
-    }else{
-      this.IsLogin=true;
+
+    fileupload() {
+      // this.file = this.$refs  .file.files[0];
+      // this.Signup_model.append('image', this.file);
+    },
+
+
+
+
+  created() {
+    if (localStorage.getItem("Access-Token") == null) {
+      this.IsLogin = false;
+    } else {
+      this.IsLogin = true;
     }
   },
-  mounted(){
-    if(localStorage.getItem('Access-Token') == null){
-      this.IsLogin=false;
-    }else{
-      this.IsLogin=true;
+  mounted() {
+    if (localStorage.getItem("Access-Token") == null) {
+      this.IsLogin = false;
+    } else {
+      this.IsLogin = true;
     }
-  }
+  },
 };
 </script>
 

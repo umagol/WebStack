@@ -6,6 +6,7 @@ const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 const path = require("path")
 const multer  = require('multer');
+const IsEmailExist = require("../middleware/IsEmailExist");
 
 
 const storage = multer.diskStorage({
@@ -13,7 +14,8 @@ const storage = multer.diskStorage({
         cb(null, 'uploads');
     },
     filename: (req, file, cb) => {
-        cb(null, `${req.body.email}` + path.extname(file.originalname));
+         cb(null, `${req.body.email}` + path.extname(file.originalname));
+        
     }
 });
 
@@ -56,24 +58,11 @@ route.post("/login", async (req, res) => {
 });
 
 //User SignUp Route
-route.post("/signup",  async (req, res) => {
-    
-    // checking user email id in database
-    const emailExit = await Auth.findOne({
-        Email: req.body.email
-    });
-    
-    //check email is exit or not
-    if (emailExit) {
-        return res.status(400).send({ error : "Email is Invalid"});    
-    }
-    //email is not exit so fill the data in db 
-
+route.post("/signup", IsEmailExist, async (req, res) => {
+//  upload.single('image'),
     // hash password  encrypt the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-    upload.single("image");
 
     // create new user
     const user = new User({
@@ -81,9 +70,9 @@ route.post("/signup",  async (req, res) => {
         UserName: req.body.name,
         UserEmail: req.body.email,
         UserAbout: req.body.about,
-        // ProfileImage: storage,
+        // ProfileImageName:req.file.filename,
+        // ProfileImagePath: `http://localhost:5000/${req.file.path}`,
     });
-
     const auth = new Auth({
         Name:req.body.name,
         Email: req.body.email,
@@ -178,3 +167,5 @@ route.post("/signup",  async (req, res) => {
 
 
 module.exports = route;
+
+
