@@ -27,7 +27,6 @@ export default {
   created(){
     axios.get('http://localhost:5000/api/user/alluser').then(response=>{
       this.AllUser = response.data;
-      console.log(response)
     }).catch(error=>{
       this.errors.push(error)
     })

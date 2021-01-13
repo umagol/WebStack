@@ -1,7 +1,6 @@
 const Auth = require("../model/auth");
 
 module.exports = async(req, res, next) => {
-    console.log(req.body.email);
     // checking user email id in database
     //email is not exit so fill the data in db
     

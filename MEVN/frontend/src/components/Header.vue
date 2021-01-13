@@ -85,12 +85,14 @@
               >
                 Signup
               </button>
-              <button
+              <a
+                class="nav-link me-5 dropdown-toggle"
+                href="#"
                 v-if="IsLogin == true"
-                type="button"
-                class="btn iconwitdh"
-                data-bs-toggle="modal"
-                data-bs-target="#signup"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +114,19 @@
                     d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
                   />
                 </svg>
-              </button>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Account</a></li>
+                <li><a class="dropdown-item" href="#">Setting</a></li>
+                <li>
+                  <a class="dropdown-item" v-on:click="logout()">logout</a>
+                </li>
+              </ul>
+
+
+
+
+
             </li>
           </ul>
         </div>
@@ -156,13 +170,6 @@
             />
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
             <button type="submit" v-on:click="LogIn()" class="btn btn-primary">
               Submit
             </button>
@@ -216,23 +223,15 @@
             >
             </textarea
             ><br />
-            <!-- <input
+            <input
               type="file"
-              class="form-control btn btn-primary"
+              class="form-control btn"
               ref="file"
-              v-on:change="fileupload"
               name="image"
-            /> -->
+            />
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="submit" v-on:click="SignUp()" class="btn btn-primary">
+            <button type="submit" v-on:click="SignUp()"  class="btn btn-primary">
               Submit
             </button>
           </div>
@@ -255,62 +254,70 @@ export default {
         password: null,
       },
       Signup_model: {},
+      UserProfileImage: new FormData(),
       file: null,
     };
   },
   methods: {
     LogIn() {
+      if(!this.Login_model  .email || !this.Login_model.password){
+        alert("Please Enter Field");
+      }else{
       axios
         .post(`http://localhost:5000/api/auth/login`, this.Login_model)
         .then((response) => {
-          localStorage.setItem("Access-Token", response.data.Accesstoken);
-          window.location.reload();
+          if(response.data.error){
+            alert(response.data.error);
+          }else{
+            localStorage.setItem("Access-Token", response.data.Accesstoken);
+            window.location.reload();
+          } 
         })
         .catch((e) => {
           this.errors.push(e);
         });
+      }
     },
-
-
-
-
-
-
-
-
-
-
     SignUp() {
       console.log(this.Signup_model);
       axios
         .post(`http://localhost:5000/api/auth/signup`, this.Signup_model)
         .then((response) => {
           console.log(response);
+          console.log(response.data.UserEmail)
+          this.fileupload(response.data.UserEmail);
           // window.location.reload();
         })
         .catch((e) => {
           this.errors.push(e);
         });
     },
-  },
-
-    fileupload() {
-      // this.file = this.$refs  .file.files[0];
-      // this.Signup_model.append('image', this.file);
+     fileupload( email ) {
+      console.log(email);
+      this.file = this.$refs.file.files[0];
+      this.UserProfileImage.append('image', this.file);
+       axios
+        .post(`http://localhost:5000/api/auth/uploadprofile/${email}`, this.UserProfileImage)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
-
-
-
-
+    logout(){
+      localStorage.clear();
+    },
+  },
   created() {
-    if (localStorage.getItem("Access-Token") == null) {
+    if (!localStorage.getItem("Access-Token")) {
       this.IsLogin = false;
     } else {
       this.IsLogin = true;
     }
   },
   mounted() {
-    if (localStorage.getItem("Access-Token") == null) {
+    if (!localStorage.getItem("Access-Token") ) {
       this.IsLogin = false;
     } else {
       this.IsLogin = true;

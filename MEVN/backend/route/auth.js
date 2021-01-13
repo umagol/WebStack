@@ -14,11 +14,9 @@ const storage = multer.diskStorage({
         cb(null, 'uploads');
     },
     filename: (req, file, cb) => {
-         cb(null, `${req.body.email}` + path.extname(file.originalname));
-        
+         cb(null, `${req.params.email}` + path.extname(file.originalname));
     }
 });
-
 const fileFilter = (req, file, cb) => {
     if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
         cb(null, true);
@@ -26,8 +24,10 @@ const fileFilter = (req, file, cb) => {
         cb(null, false);
     }
 }
-
 const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+
+
 
 
 
@@ -59,19 +59,14 @@ route.post("/login", async (req, res) => {
 
 //User SignUp Route
 route.post("/signup", IsEmailExist, async (req, res) => {
-//  upload.single('image'),
-    // hash password  encrypt the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
     // create new user
     const user = new User({
         //requist . bodypaser . filedname by pass data in frontend or postman
         UserName: req.body.name,
         UserEmail: req.body.email,
         UserAbout: req.body.about,
-        // ProfileImageName:req.file.filename,
-        // ProfileImagePath: `http://localhost:5000/${req.file.path}`,
     });
     const auth = new Auth({
         Name:req.body.name,
@@ -89,6 +84,24 @@ route.post("/signup", IsEmailExist, async (req, res) => {
     }
 });
 
+route.post("/uploadprofile/:email",upload.single('image'), async (req, res) => {
+        const email = req.params.email;
+        console.log(" uploda image  "+email);
+
+        await User.findOneAndUpdate({UserEmail: email},{$set:{
+            ProfileImageName:req.file.filename,
+            ProfileImagePath: `http://localhost:5000/${req.file.path}`,
+        }}  ,
+        {
+            multi:true
+        },
+        function(err, doc){
+            if(err){
+                console.log("Something wrong when updating data!");
+            }
+        });
+        res.send({"greate":"good"});
+    });
 
 
 
