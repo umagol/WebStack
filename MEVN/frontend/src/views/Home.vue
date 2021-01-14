@@ -1,14 +1,22 @@
 <template>
   <div class="home">
     <Header />
-    <div v-for="item in AllUser" :key="item.UserName" class="card" style="width: 18rem;">
-      <img src="{{item.ProfileImagePath}}" class="card-img-top" width="50px" height="100px"  alt="logo">
+    
+    <div class="container-fluid mt-3">
+    <div class="row">
+    <div v-for="item in AllUser" :key="item.UserName" class="card ms-1" style="width: 18rem;">
+      <img :src="item.ProfileImagePath"  class="card-img-top"   alt="logo">
       <div class="card-body">
         <h1>{{item.UserName}}</h1>
         <p class="card-text">{{item.UserAbout}}</p>
-
       </div>
+       <div class="card-footer text-muted" >
+       <a href="#" class="btn me-1 btn-primary">More Info </a>
+       <a href="#" class="btn ms-1 btn-primary">Message</a>
     </div>
+    </div>
+    </div>
+  </div>
   </div>
 </template>
 

@@ -32,9 +32,11 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 route.post("/login", async (req, res) => {
-
+    console.log("User Is Login  "+req.body.email);
     // checking user email id and Psaaword in database
     const user = await Auth.findOne({ Email: req.body.email });
+
+    const UserData = await User.findOne({ UserEmail: req.body.email });
 
     //if it is not exit send error
     if (!user) {
@@ -53,12 +55,18 @@ route.post("/login", async (req, res) => {
                 });
             
             //send token in userid 
-            res.header("auth-token", token).status(201).send({ Accesstoken: token});
+            res.header("auth-token", token).status(201).send(
+                {
+                     Accesstoken: token,
+                     UserName: UserData.UserEmail,
+                     UserAbout: UserData.UserAbout
+                });
     }
 });
 
 //User SignUp Route
 route.post("/signup", IsEmailExist, async (req, res) => {
+    console.log("User Is Signup");
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     // create new user

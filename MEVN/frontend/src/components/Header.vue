@@ -85,14 +85,12 @@
               >
                 Signup
               </button>
-              <a
-                class="nav-link me-5 dropdown-toggle"
-                href="#"
+              <button
                 v-if="IsLogin == true"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                type="button"
+                class="btn iconwitdh"
+                data-bs-toggle="modal"
+                data-bs-target="#userAccount"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -114,26 +112,14 @@
                     d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
                   />
                 </svg>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Account</a></li>
-                <li><a class="dropdown-item" href="#">Setting</a></li>
-                <li>
-                  <a class="dropdown-item" v-on:click="logout()">logout</a>
-                </li>
-              </ul>
-
-
-
-
-
+              </button>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Model is Start -->
+    <!-- Model is Login -->
 
     <div
       class="modal fade"
@@ -153,20 +139,22 @@
               aria-label="Close"
             ></button>
           </div>
-          <!-- <form > -->
+          <!-- <form  v-on:submit="LogIn()"> -->
           <div class="modal-body">
             <input
               class="form-control"
               type="email"
               placeholder="Enter Email Address"
-              v-model.trim="Login_model.email"
+              v-model="Login_model.email"
+              v-on:keyup.enter="LogIn()"
             /><br />
             <!-- <label class="form-control me-auth">Password</label> -->
             <input
               class="form-control"
               type="password"
               placeholder="Enter Password"
-              v-model.trim="Login_model.password"
+              v-model="Login_model.password"
+              v-on:keyup.enter="LogIn()"
             />
           </div>
           <div class="modal-footer">
@@ -178,13 +166,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="modal fade"
-      id="signup"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -196,6 +178,7 @@
               aria-label="Close"
             ></button>
           </div>
+          <!-- <form> -->
           <div class="modal-body">
             <input
               class="form-control"
@@ -230,6 +213,7 @@
               name="image"
             />
           </div>
+          <!-- </form> -->
           <div class="modal-footer">
             <button type="submit" v-on:click="SignUp()"  class="btn btn-primary">
               Submit
@@ -238,12 +222,57 @@
         </div>
       </div>
     </div>
+
+
+
+<!-- User Account Model -->
+
+ <div class="modal fade" id="userAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">User Account</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Enter User Name"
+              v-model="UpdateForm.name"
+            /><br />
+
+            <textarea
+              class="form-control"
+              placeholder="Enter About You"
+              v-model="UpdateForm.about"
+            >
+            </textarea
+            ><br />
+          </div>
+          <div class="modal-footer">
+            <button type="submit" v-on:click="logout()"  class="btn btn-primary">
+              logout
+            </button>
+            <button type="submit" v-on:click="update()"  class="btn btn-primary">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -256,11 +285,17 @@ export default {
       Signup_model: {},
       UserProfileImage: new FormData(),
       file: null,
+      UpdateForm: {
+        name:"",
+        about:""
+      },
+      UserAbout: "",
+      UserName: ""
     };
   },
   methods: {
-    LogIn() {
-      if(!this.Login_model  .email || !this.Login_model.password){
+   async LogIn() {
+      if(!this.Login_model.email || !this.Login_model.password){
         alert("Please Enter Field");
       }else{
       axios
@@ -269,9 +304,16 @@ export default {
           if(response.data.error){
             alert(response.data.error);
           }else{
+            console.log(response)
             localStorage.setItem("Access-Token", response.data.Accesstoken);
-            window.location.reload();
-          } 
+            // window.location.reload();
+            localStorage.setItem("data", `${response.data.UserName},${response.data.UserAbout}`);
+           
+            this.UpdateForm.name = "response.data.UserName";
+            this.UpdateForm.about = response.data.UserAbout;
+            console.log(this.UpdateForm.name);
+          }
+
         })
         .catch((e) => {
           this.errors.push(e);
@@ -286,7 +328,7 @@ export default {
           console.log(response);
           console.log(response.data.UserEmail)
           this.fileupload(response.data.UserEmail);
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((e) => {
           this.errors.push(e);
@@ -300,6 +342,7 @@ export default {
         .post(`http://localhost:5000/api/auth/uploadprofile/${email}`, this.UserProfileImage)
         .then((response) => {
           console.log(response);
+
         })
         .catch((e) => {
           this.errors.push(e);
@@ -307,7 +350,11 @@ export default {
     },
     logout(){
       localStorage.clear();
+      window.location.reload();
     },
+    update(){
+      console.log("Update FOrm");
+    }
   },
   created() {
     if (!localStorage.getItem("Access-Token")) {
@@ -316,13 +363,13 @@ export default {
       this.IsLogin = true;
     }
   },
-  mounted() {
-    if (!localStorage.getItem("Access-Token") ) {
-      this.IsLogin = false;
-    } else {
-      this.IsLogin = true;
-    }
-  },
+  // mounted() {
+  //   if (!localStorage.getItem("Access-Token") ) {
+  //     this.IsLogin = false;
+  //   } else {
+  //     this.IsLogin = true;
+  //   }
+  // },
 };
 </script>
 
