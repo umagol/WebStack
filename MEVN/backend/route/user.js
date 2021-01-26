@@ -66,4 +66,5 @@ route.put( "/update/:Email", verify, async (req, res) => {
     }
 });
 
+
 module.exports = route;

@@ -312,6 +312,7 @@ export default {
             this.UpdateForm.name = "response.data.UserName";
             this.UpdateForm.about = response.data.UserAbout;
             console.log(this.UpdateForm.name);
+            window.location.reload();
           }
 
         })
